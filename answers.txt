@@ -1,0 +1,28 @@
+// Exercie 6.1
+1. What happens if users choose "Cancel"?
+- If the user selects "Cancel", the JOptionPane.showConfirmDialog() method returns JOptionPane.CANCEL_OPTION, which has a value of 2.
+- However, in the given program, only 2 conditions are checked:
+• option == JOptionPane.YES_OPTION (value 0)
+• option == JOptionPane.NO_OPTION (value 1)
+- Since there is no specific conditon for "cancel option", the program will default to displaying:
+You've chosen: No
+- This happens because the ternary operator in the showMessageDialog() call only differentiates between "Yes" and "No" but does not account for "Cancel"
+2. How to customize the options for users?
+- We can use JOptionPane.showOptionDialog() to customize the options.
+• Example Restricting to only "Yes" and "No" options
+      int option = JOptionPane.showOptionDialog(null, 
+          "Do you want to continue?", 
+          "Custom Options", 
+          JOptionPane.YES_NO_OPTION, 
+          JOptionPane.QUESTION_MESSAGE, 
+          null, null, null);
+- Using JOptionPane.YES_NO_OPTION, only Yes and No buttons will appear instead of "Yes," "No," and "Cancel."
+• Example: Customizing the options to "I do" and "I don’t"
+      String[] options = {"I do", "I don’t"};
+      int option = JOptionPane.showOptionDialog(null, 
+          "Do you agree?", 
+          "Custom Options", 
+          JOptionPane.DEFAULT_OPTION, 
+          JOptionPane.QUESTION_MESSAGE, 
+          null, options, options[0]);
+- In this case, the buttons displayed will be "I do" and "I don’t" instead of the default "Yes" and "No"

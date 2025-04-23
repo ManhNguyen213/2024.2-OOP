@@ -1,0 +1,71 @@
+	15. Unique item in a list
+Question: If the passing object is not an instance of Media, what happens?
+
+Answer:
+	public boolean equals(Object obj) {
+		if(this == obj) return true;
+		if(obj == null || getClass() != obj.getClass()) return false;
+		
+		Media other = (Media) obj;
+		return this.title != null && this.title.equalsIgnoreCase(other.title);
+	}
+
+- The condition becomes true, and as a result, the method immediately returns false.
+- This prevents the code from trying to cast obj to Media, which would otherwise cause a ClassCastException.
+So: If the object passed to equals() is not an instance of Media, the method will return false safely, and the program will continue running without any exceptions.
+
+	17. Sort media in the cart
+1. Question: What class should implement the Comparable interface?
+
+Answer: The class that should implement the Comparable interface is the Media class. Since Media is the base class for other media types like Book, DVD, CD, implementing Comparable<Media> in this class allows us to define a natural ordering for all media objects.
+
+
+
+2. Question: In those classes, how should you implement the compareTo() method to reflect the ordering that we want?
+
+Answer: If we choose to order by title then cost, the compareTo() method in the Media class can be implemented.
+	@Override
+	public int compareTo(Media other) {
+		int titleCompare = this.title.compareToIgnoreCase(other.title);
+		if(titleCompare != 0) {
+			return titleCompare;
+		}
+		return Float.compare(other.cost, this.cost);
+}
+- This make a consistent default ordering: title first, then cost.
+
+
+
+3. Question: Can we have two ordering rules of the item (by title then cost and by cost then title) if we use this Comparable interface approach?
+
+Answer: No, we cannot have multiple ordering rules using only the Comparable interface.
+- The Comparable interface allows us to define only one natural ordering via the compareTo() method.
+- If we want multiple sorting strategies, we must use separate Comparator classes, like MediaComparatorByTitleCost and MediaComparatorByCostTitle.
+
+
+
+4. Question: Suppose the DVDs have a different ordering rule from the other media types, that is by title, then decreasing length, then cost. How would you modify your code to allow this?
+
+Answer: There are 2 main approaches:
+- Option 1: Use Comparator with instanceof checks
+Create a custom Comparator that checks the media type:
+---------------------------------------------
+public class CustomMediaComparator implements Comparator<Media> {
+    @Override
+    public int compare(Media m1, Media m2) {
+        if (m1 instanceof DigitalVideoDisc && m2 instanceof DigitalVideoDisc) {
+            DigitalVideoDisc d1 = (DigitalVideoDisc) m1;
+            DigitalVideoDisc d2 = (DigitalVideoDisc) m2;
+            int titleCompare = d1.getTitle().compareToIgnoreCase(d2.getTitle());
+            if (titleCompare != 0) return titleCompare;
+            int lengthCompare = Integer.compare(d2.getLength(), d1.getLength());
+            if (lengthCompare != 0) return lengthCompare;
+            return Float.compare(d1.getCost(), d2.getCost());
+        }
+        return m1.compareTo(m2);
+    }
+}
+----------------------------------------------
+
+- Option 2: Override compareTo() in subclasses (not recommended)
+Override compareTo() specifically in the DigitalVideoDisc class, but it can breaks polymorphism and consistency in collections like TreeSet

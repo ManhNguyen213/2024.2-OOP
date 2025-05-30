@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="196.0" prefWidth="309.0" style="-fx-border-color: black;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox alignment="CENTER" layoutX="20.0" layoutY="21.0" prefHeight="155.0" prefWidth="269.0">
+         <children>
+            <Label fx:id="lb1Title" alignment="CENTER" prefHeight="50.0" prefWidth="273.0" text="Title">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <Label fx:id="lb1Cost" alignment="CENTER" prefHeight="50.0" prefWidth="305.0" text="Cost">
+               <font>
+                  <Font size="16.0" />
+               </font></Label>
+            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="305.0" spacing="20.0">
+               <children>
+                  <Button fx:id="btnAddToCart" mnemonicParsing="false" onAction="#btnAddToCartClicked" prefHeight="50.0" prefWidth="305.0" text="Add to Cart" />
+                  <Button fx:id="btnPlay" mnemonicParsing="false" onAction="#btnPlayClicked" prefHeight="50.0" prefWidth="305.0" text="Play" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
